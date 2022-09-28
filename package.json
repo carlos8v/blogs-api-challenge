@@ -3,13 +3,10 @@
   "description": "Repositório de desafio da aplicação blogs-api",
   "version": "0.1.0",
   "scripts": {
-    "prestart": "",
+    "prestart": "npx prisma migrate dev",
     "start": "ts-node-dev src/index.ts",
     "debug": "ts-node-dev src/index.ts",
-    "test": "vitest",
-    "test-coverage": "vitest",
-    "db:drop": "",
-    "db:seed": ""
+    "test": "vitest"
   },
   "dependencies": {
     "@prisma/client": "^4.4.0",
