@@ -1,0 +1,32 @@
+{
+  "name": "blogs-api-challenge",
+  "description": "Repositório de desafio da aplicação blogs-api",
+  "version": "0.1.0",
+  "scripts": {
+    "prestart": "",
+    "start": "ts-node-dev src/index.ts",
+    "debug": "ts-node-dev src/index.ts",
+    "test": "vitest",
+    "test-coverage": "vitest",
+    "db:drop": "",
+    "db:seed": ""
+  },
+  "dependencies": {
+    "@prisma/client": "^4.4.0",
+    "dotenv": "8.2.0",
+    "express": "4.17.1",
+    "jsonwebtoken": "^8.5.1",
+    "mysql2": "2.1.0"
+  },
+  "devDependencies": {
+    "@types/express": "^4.17.14",
+    "@types/jsonwebtoken": "^8.5.9",
+    "@types/node": "^18.7.23",
+    "frisby": "2.1.2",
+    "prisma": "^4.4.0",
+    "supertest": "4.0.2",
+    "ts-node-dev": "^2.0.0",
+    "typescript": "^4.8.4",
+    "vitest": "^0.23.4"
+  }
+}

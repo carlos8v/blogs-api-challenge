@@ -1,0 +1,26 @@
+{
+  "requirements": [
+    { "description": "1 - Sua aplicação deve ter o endpoint POST `/user`" },
+    { "description": "2 - Sua aplicação deve ter o endpoint POST `/login`" },
+    { "description": "3 - Sua aplicação deve ter o endpoint GET `/user`" },
+    { "description": "4 - Sua aplicação deve ter o endpoint GET `/user/:id`" },
+    { "description": "5 - Sua aplicação deve ter o endpoint POST `/categories`" },
+    { "description": "6 - Sua aplicação deve ter o endpoint GET `/categories`" },
+    { "description": "7 - Sua aplicação deve ter o endpoint POST `/post`" },
+    { "description": "8 - Sua aplicação deve ter o endpoint GET `/post`" },
+    { "description": "9 - Sua aplicação deve ter o endpoint GET `post/:id`" },
+    { "description": "10 - Sua aplicação deve ter o endpoint PUT `/post/:id`" },
+    {
+      "description": "11 - Sua aplicação deve ter o endpoint DELETE `post/:id`",
+      "bonus": true
+    },
+    {
+      "description": "12 - Sua aplicação deve ter o endpoint DELETE `/user/me`",
+      "bonus": true
+    },
+    {
+      "description": "13 - Sua aplicação deve ter o endpoint GET `post/search?q=:searchTerm`",
+      "bonus": true
+    }
+  ]
+}

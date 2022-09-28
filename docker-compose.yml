@@ -1,0 +1,12 @@
+version: '3'
+services:
+  db:
+    container_name: blogs-api-challenge-db
+    image: mysql:8.0.21
+    command: --default-authentication-plugin=mysql_native_password
+    ports:
+      - 3306:3306
+      - 33060:33060
+    environment:
+      MYSQL_DATABASE: 'blogs_api_challenge'
+      MYSQL_ROOT_PASSWORD: 'password'

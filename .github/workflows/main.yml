@@ -1,0 +1,34 @@
+on:
+  pull_request:
+    types: [opened, synchronize]
+
+jobs:
+  evaluator_job:
+    name: Evaluator Job
+    runs-on: ubuntu-18.04
+    services:
+      mysql:
+        image: mysql:8.0.21
+        command: --default-authentication-plugin=mysql_native_password
+        env:
+          MYSQL_DATABASE: 'blogs_api_challenge'
+          MYSQL_ROOT_PASSWORD: 'password'
+        ports:
+          - 3306:3306
+          - 33060:33060
+        options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
+    steps:
+      - uses: actions/checkout@v3
+
+      - uses: actions/setup-node@v3
+        with:
+          node-version: '12'
+
+      - name: Evaluator step
+        id: evaluator
+        uses: carlos8v/vitest-evaluator-action@v2.4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+        env:
+          DATABASE_URL: 'mysql://adalovelace:randompassword@localhost:3306/blogs_api_challenge'
+          JWT_SECRET: 'secretJWT'
