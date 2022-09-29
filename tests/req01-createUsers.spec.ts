@@ -1,13 +1,13 @@
 import { describe, it, beforeEach, expect } from 'vitest'
-
 import frisby from 'frisby'
-import shell from 'shelljs'
+
+import { truncateDatabase } from './db/utils'
 
 const url = 'http://localhost:3000'
 
 describe('1 - Sua aplicação deve ter o endpoint POST `/user`', () => {
-  beforeEach(() => {
-    shell.exec('npm run db:drop')
+  beforeEach(async () => {
+    await truncateDatabase()
   })
 
   it('Será validado que é possível cadastrar um usuário com sucesso', () => {

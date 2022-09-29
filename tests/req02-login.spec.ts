@@ -1,14 +1,15 @@
 import { describe, it, beforeAll, expect } from 'vitest'
-
 import frisby from 'frisby'
-import shell from 'shelljs'
+
+import seedDatabase from './db/seed'
+import { truncateDatabase } from './db/utils'
 
 const url = 'http://localhost:3000'
 
 describe('2 - Sua aplicação deve ter o endpoint POST `/login`', () => {
   beforeAll(async () => {
-    shell.exec('npm run db:drop')
-    shell.exec('npm run db:seed')
+    await truncateDatabase()
+    await seedDatabase()
   })
 
   it('Será validado que é possível fazer login com sucesso', () => {

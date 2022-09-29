@@ -4,12 +4,10 @@
   "version": "0.1.0",
   "scripts": {
     "prestart": "npm run db:migrate",
-    "start": "ts-node-dev src/index.ts",
-    "debug": "ts-node-dev src/index.ts",
+    "start": "npm run debug",
+    "debug": "ts-node-dev --transpile-only --ignore-watch node_modules/ src/index.ts",
     "test": "npm run db:migrate && vitest",
-    "db:migrate": "npx prisma migrate deploy",
-    "db:drop": "npx prisma migrate reset --force --skip-generate",
-    "db:seed": "ts-node-dev --transpile-only prisma/seeds/index.ts"
+    "db:migrate": "npx prisma migrate deploy"
   },
   "dependencies": {
     "@prisma/client": "^4.4.0",
@@ -19,6 +17,7 @@
     "mysql2": "2.1.0"
   },
   "devDependencies": {
+    "@types/dotenv": "^8.2.0",
     "@types/express": "^4.17.14",
     "@types/frisby": "^2.0.14",
     "@types/jsonwebtoken": "^8.5.9",

@@ -12,11 +12,12 @@ Aqui você vai encontrar os detalhes de como estruturar o desenvolvimento do seu
 - [Instruções para entregar seu projeto](#instruções-para-entregar-seu-projeto)
   - [Antes de começar a desenvolver](#antes-de-começar-a-desenvolver)
   - [Durante o desenvolvimento](#durante-o-desenvolvimento)
-  - [Execução de testes unitários](#execução-de-testes-unitários)
 - [Requisitos do projeto](#requisitos-do-projeto)
   - [Antes de começar](#antes-de-começar)
-  - [Observações importantes](#-observações-importantes)
+    - [Observações importantes](#-observações-importantes)
     - [Dicas](#dicas)
+  - [Critérios de avaliação](#critérios-de-avaliação)
+  - [Execução de testes unitários](#execução-de-testes-unitários)
   - [Lista de Requisitos](#lista-de-requisitos)
     - [1 - Sua aplicação deve ter o endpoint POST `/user`](#1---sua-aplicação-deve-ter-o-endpoint-post-user)
     - [2 - Sua aplicação deve ter o endpoint POST `/login`](#2---sua-aplicação-deve-ter-o-endpoint-post-login)
@@ -130,22 +131,6 @@ Para fazer um post é necessário usuário e login, portanto será trabalhada a 
 
 ---
 
-### Execução de testes unitários
-
-Nesse repositório estaremos usando o [vitest](https://vitest.dev/) para executar os testes, use o comando a seguir para executar todos os testes:
-
-```sh
-npm test
-```
-
-Caso queria executar só um arquivo de test use o seguinte comando, considerado que quer testar o arquivo `tests/req07-createPost.spec.ts`:
-
-```sh
-npm test -- tests/req07-createPost.spec.js
-```
-
----
-
 # Requisitos do projeto:
 
 ## Antes de começar:
@@ -205,11 +190,11 @@ Alguns exemplos:
 
 ---
 
-#### Os seguintes pontos serão avaliados:
+## Critérios de avaliação:
 
 - O seu projeto deverá usar um `ORM` para criar e atualizar o seu banco. A clonagem do projeto seguida de um comando de migrate deve deixá-lo em sua forma esperada.
 
-- Deve conter uma tabela chamada **Users**, contendo dados com a seguinte estrutura::
+- Deve conter uma tabela chamada `users` com o model `User`, contendo dados com a seguinte estrutura:
 
   ```json
   {
@@ -220,7 +205,7 @@ Alguns exemplos:
     "image": "https://avatars.dicebear.com/api/adventurer/ada%20lovelace.svg"
   }
   ```
-- Deve conter uma tabela chamada **Categories**, contendo dados com a seguinte estrutura::
+- Deve conter uma tabela chamada `categories` com o model `Category`, contendo dados com a seguinte estrutura:
 
   ```json
   {
@@ -229,7 +214,7 @@ Alguns exemplos:
   }
   ```
 
-- Deve conter uma tabela chamada **PostsCategories**, contendo dados com a seguinte estrutura:
+- Deve conter uma tabela chamada `posts_categories` com o model `PostCategory`, contendo dados com a seguinte estrutura:
 
   ```json
   {
@@ -238,7 +223,7 @@ Alguns exemplos:
   }
   ```
 
-- Deve conter uma tabela chamada **BlogPosts**, contendo dados com a seguinte estrutura:
+- Deve conter uma tabela chamada `blog_posts` com o model `BlogPost`, contendo dados com a seguinte estrutura:
 
   ```json
   {
@@ -253,14 +238,31 @@ Alguns exemplos:
   
   **Os dados acima são fictícios, e estão aqui apenas como exemplo**
 
-  **OBS: Os testes irão rodar atráves do seu migrate usando os seguintes comandos:**
+---
 
-  ```json
-  {
-    "db:drop": "npx prisma migrate reset --force --skip-generate", // Exclui dados das tabelas
-    "db:seed": "ts-node-dev --transpile-only prisma/seeds/index.ts" // Insere dados nas tabelas
-  }
-  ```
+### Execução de testes unitários
+
+Tenha em mente que o banco de dados utilizado pode ser tanto um _Baas_ ou um servidor hospedado na sua máquina. Esse repositório vem com um arquivo `docker-compose.yml` para facilitar o setup de banco de dados, caso utilize banco de dados com **docker** execute o seguinte comando para iniciar o serviço:
+
+```sh
+docker-compose up -d
+```
+
+Fique atento às credenciais de conexão do banco, checando no arquivo `.env` e siga o formato aprensetado anteriormente
+
+Nesse repositório estaremos usando o [vitest](https://vitest.dev/) para executar os testes, use o comando a seguir para executar todos os testes:
+
+```sh
+npm test
+```
+
+Caso queria executar só um arquivo de test use o seguinte comando, considerado que quer testar o arquivo `tests/req07-createPost.spec.ts`:
+
+```sh
+npm test -- tests/req07-createPost.spec.js
+```
+
+---
 
 ## Lista de Requisitos:
 
@@ -364,7 +366,7 @@ Alguns exemplos:
 - **[Será validado que não é possível fazer login sem o campo `password`]**
   * Se o login não tiver o campo "password" o resultado retornado deverá ser conforme exibido abaixo, com um status http `400`
 
-**[Será validado que não é possível fazer login com o campo `email` em branco]**
+- **[Será validado que não é possível fazer login com o campo `email` em branco]**
   * Se o login tiver o campo "email" em branco o resultado retornado deverá ser conforme exibido abaixo, com um status http `400`
 
 - **[Será validado que não é possível fazer login com o campo `password` em branco]**

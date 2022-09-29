@@ -1,14 +1,15 @@
 import { describe, it, beforeEach, expect } from 'vitest'
-
 import frisby from 'frisby'
-import shell from 'shelljs'
+
+import seedDatabase from './db/seed'
+import { truncateDatabase } from './db/utils'
 
 const url = 'http://localhost:3000'
 
 describe('11 - Sua aplicação deve ter o endpoint DELETE `post/:id`', () => {
-  beforeEach(() => {
-    shell.exec('npm run db:drop')
-    shell.exec('npm run db:seed')
+  beforeEach(async () => {
+    await truncateDatabase()
+    await seedDatabase()
   })
 
   it('Será validado que é possível deletar um blogpost com sucesso', () => {
