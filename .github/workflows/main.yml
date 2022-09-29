@@ -28,6 +28,7 @@ jobs:
         id: evaluator
         uses: carlos8v/vitest-evaluator-action@v2.4
         with:
+          npm-start: true
           token: ${{ secrets.GITHUB_TOKEN }}
         env:
           DATABASE_URL: 'mysql://adalovelace:randompassword@localhost:3306/blogs_api_challenge'
