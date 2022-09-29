@@ -3,11 +3,10 @@
   "description": "Repositório de desafio da aplicação blogs-api",
   "version": "0.1.0",
   "scripts": {
-    "prestart": "npm run db:migrate",
+    "prestart": "npx prisma migrate deploy",
     "start": "npm run debug",
-    "debug": "ts-node-dev --transpile-only --ignore-watch node_modules/ src/index.ts",
-    "test": "npm run db:migrate && vitest",
-    "db:migrate": "npx prisma migrate deploy"
+    "debug": "ts-node-dev --transpile-only --ignore-watch node_modules/ --exit-child src/index.ts",
+    "test": "vitest"
   },
   "dependencies": {
     "@prisma/client": "^4.4.0",
@@ -22,7 +21,6 @@
     "@types/frisby": "^2.0.14",
     "@types/jsonwebtoken": "^8.5.9",
     "@types/node": "^18.7.23",
-    "@types/shelljs": "^0.8.11",
     "frisby": "2.1.2",
     "prisma": "^4.4.0",
     "ts-node-dev": "^2.0.0",
