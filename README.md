@@ -257,8 +257,7 @@ Alguns exemplos:
 
   ```json
   {
-    "prestart": "npx prisma migrate dev", // Cria o banco e gera as tabelas
-    "db:drop": "npx prisma migrate reset", // Exclui o banco
+    "db:drop": "npx prisma migrate reset --force --skip-generate", // Exclui dados das tabelas
     "db:seed": "ts-node-dev --transpile-only prisma/seeds/index.ts" // Insere dados nas tabelas
   }
   ```
