@@ -166,11 +166,11 @@ DATABASE_URL="mysql://adalovelace:password@localhost:3306/blogs_api_challenge"
 
 **Com elas que iremos conseguir conectar ao banco do avaliador automático**
 
-#### Variável JWT (opcional):
+#### Variável JWT:
 
 `JWT_SECRET`
 
-**Também poderá ser utilizada esta variável de ambiente para o SECRET do JWT**
+**É necessário expor esta variável de ambiente parar servir como a chave JWT da aplicação**
 
 ### Dicas
 
