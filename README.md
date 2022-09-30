@@ -250,17 +250,13 @@ docker-compose up -d
 
 Fique atento às credenciais de conexão do banco, checando no arquivo `.env` e siga o formato aprensetado anteriormente
 
-Nesse repositório estaremos usando o [vitest](https://vitest.dev/) para executar os testes, use o comando a seguir para executar todos os testes:
-
-```sh
-npm test
-```
-
-Caso queria executar só um arquivo de test use o seguinte comando, considerado que quer testar o arquivo `tests/req07-createPost.spec.ts`:
+Nesse repositório estaremos usando o [vitest](https://vitest.dev/) para executar os testes, use o comando a seguir para executar o teste de um dos requisitos:
 
 ```sh
 npm test -- tests/req07-createPost.spec.js
 ```
+
+:warning: Vocẽ pode utilizar `npm test` para rodas todos os testes, mas essa ação pode demorar demais durante o desenvolvimento, deixe que o avaliador determine como está o progresso de seu projeto
 
 ---
 
