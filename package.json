@@ -18,11 +18,11 @@
   "devDependencies": {
     "@types/dotenv": "^8.2.0",
     "@types/express": "^4.17.14",
-    "@types/frisby": "^2.0.14",
     "@types/jsonwebtoken": "^8.5.9",
     "@types/node": "^18.7.23",
-    "frisby": "2.1.2",
+    "@types/supertest": "^2.0.12",
     "prisma": "^4.4.0",
+    "supertest": "^6.2.4",
     "ts-node-dev": "^2.0.0",
     "typescript": "^4.8.4",
     "vitest": "^0.23.4"

@@ -1,10 +1,11 @@
 import { describe, it, beforeAll, expect } from 'vitest'
-import frisby from 'frisby'
+
+import supertest from 'supertest'
 
 import seedDatabase from './db/seed'
 import { truncateDatabase } from './db/utils'
 
-const url = 'http://localhost:3000'
+import { app } from '../src/server'
 
 describe('12 - Sua aplicação deve ter o endpoint DELETE `/user/me`', () => {
   beforeAll(async () => {
@@ -12,66 +13,41 @@ describe('12 - Sua aplicação deve ter o endpoint DELETE `/user/me`', () => {
     await seedDatabase()
   })
 
-  it('Será validado que é possível excluir meu usuário com sucesso', () => {
-    let token
-    return frisby
-      .post(`${url}/login`,
-        {
-          email: 'lewishamilton@gmail.com',
-          password: '123456',
-        })
-      .expect('status', 200)
-      .then((response) => {
-        const { json } = response
-        token = json.token
-
-        return frisby
-          .setup({
-            request: {
-              headers: {
-                Authorization: token,
-                'Content-Type': 'application/json',
-              },
-            },
-          })
-          .del(`${url}/user/me`)
-          .expect('status', 204)
+  it('Será validado que é possível excluir meu usuário com sucesso', async () => {
+    const { body: loginResponse, status: loginStatus } = await supertest(app)
+      .post('/login')
+      .send({
+        email: 'lewishamilton@gmail.com',
+        password: '123456',
       })
+
+    expect(loginStatus).toBe(200)
+    expect(loginResponse.token).not.toBeNull()
+
+    const token = `Bearer ${loginResponse.token}`
+
+    const { status } = await supertest(app)
+      .del('/user/me')
+      .set('Authorization', token)
+
+    expect(status).toBe(204)
   })
 
-  it('Será validado que não é possivel excluir meu usuário com token inválido', () => {
-    return frisby
-      .setup({
-        request: {
-          headers: {
-            Authorization: 'nhfur53sbyf84',
-            'Content-Type': 'application/json',
-          },
-        },
-      })
-      .del(`${url}/user/me`)
-      .expect('status', 401)
-      .then((response) => {
-        const { json } = response
-        expect(json.message).toBe('Expired or invalid token')
-      })
+  it('Será validado que não é possivel excluir meu usuário com token inválido', async () => {
+    const { body, status } = await supertest(app)
+      .del('/user/me')
+      .set('Authorization', 'Bearer nhfur53sbyf84')
+
+    expect(status).toBe(401)
+    expect(body.message).toBe('Expired or invalid token')
   })
 
-  it('Será validado que não é possivel excluir meu usuário sem o token', () => {
-    return frisby
-      .setup({
-        request: {
-          headers: {
-            Authorization: '',
-            'Content-Type': 'application/json',
-          },
-        },
-      })
-      .del(`${url}/user/me`)
-      .expect('status', 401)
-      .then((response) => {
-        const { json } = response
-        expect(json.message).toBe('Token not found')
-      })
+  it('Será validado que não é possivel excluir meu usuário sem o token', async () => {
+    const { body, status } = await supertest(app)
+      .del('/user/me')
+      .set('Authorization', '')
+
+    expect(status).toBe(401)
+    expect(body.message).toBe('Token not found')
   })
 })

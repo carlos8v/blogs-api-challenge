@@ -1,10 +1,11 @@
 import { describe, it, beforeAll, expect } from 'vitest'
-import frisby from 'frisby'
+
+import supertest from 'supertest'
 
 import seedDatabase from './db/seed'
 import { truncateDatabase } from './db/utils'
 
-const url = 'http://localhost:3000'
+import { app } from '../src/server'
 
 describe('10 - Sua aplicação deve ter o endpoint PUT `/post/:id`', () => {
   beforeAll(async () => {
@@ -12,219 +13,154 @@ describe('10 - Sua aplicação deve ter o endpoint PUT `/post/:id`', () => {
     await seedDatabase()
   })
 
-  it('Será validado que é possível editar um blogpost com sucesso', () => {
-    let token
-    return frisby
-      .post(`${url}/login`,
-        {
-          email: 'lewishamilton@gmail.com',
-          password: '123456',
-        })
-      .expect('status', 200)
-      .then((response) => {
-        const { json } = response
-        token = json.token
-
-        return frisby
-          .setup({
-            request: {
-              headers: {
-                Authorization: token,
-                'Content-Type': 'application/json',
-              },
-            },
-          })
-          .put(`${url}/post/1`, {
-            title: 'Fórmula 1 editado',
-            content: 'O campeão do ano! editado',
-          })
-          .expect('status', 200)
-          .then((response) => {
-            const { json: jsonResponse } = response
-            expect(jsonResponse).toEqual(expect.objectContaining({
-              title: 'Fórmula 1 editado',
-              content: 'O campeão do ano! editado',
-              userId: 1,
-              categories: [{ id: 1, name: "Inovação" }]
-            }))
-          })
+  it('Será validado que é possível editar um blogpost com sucesso', async () => {
+    const { body: loginResponse, status: loginStatus } = await supertest(app)
+      .post('/login')
+      .send({
+        email: 'lewishamilton@gmail.com',
+        password: '123456',
       })
-  })
 
-  it('Será validado que é não é possível editar as categorias de um blogpost', () => {
-    let token
-    return frisby
-      .post(`${url}/login`,
-        {
-          email: 'lewishamilton@gmail.com',
-          password: '123456',
-        })
-      .expect('status', 200)
-      .then((response) => {
-        const { json } = response
-        token = json.token
+    expect(loginStatus).toBe(200)
+    expect(loginResponse.token).not.toBeNull()
 
-        return frisby
-          .setup({
-            request: {
-              headers: {
-                Authorization: token,
-                'Content-Type': 'application/json',
-              },
-            },
-          })
-          .put(`${url}/post/1`, {
-            title: 'Fórmula 1 editado',
-            content: 'O campeão do ano! editado',
-            categoryIds: [1, 2]
-          })
-          .expect('status', 400)
-          .then((response) => {
-            const { json: jsonResponse } = response
-            expect(jsonResponse.message).toBe('Categories cannot be edited')
-          })
-      })
-  })
+    const token = `Bearer ${loginResponse.token}`
 
-  it('Será validado que não é possível editar um blogpost com outro usuário', () => {
-    let token
-    return frisby
-      .post(`${url}/login`,
-        {
-          email: 'MichaelSchumacher@gmail.com',
-          password: '123456',
-        })
-      .expect('status', 200)
-      .then((response) => {
-        const { json } = response
-        token = json.token
-
-        return frisby
-          .setup({
-            request: {
-              headers: {
-                Authorization: token,
-                'Content-Type': 'application/json',
-              },
-            },
-          })
-          .put(`${url}/post/1`, {
-            title: 'Fórmula 1 editado',
-            content: 'O campeão do ano! editado',
-          })
-          .expect('status', 401)
-          .then((response) => {
-            const { json: jsonResponse } = response
-            expect(jsonResponse.message).toBe('Unauthorized user')
-          })
-      })
-  })
-
-  it('Será validado que não possível editar um blogpost sem token', () => {
-    return frisby
-      .setup({
-        request: {
-          headers: {
-            Authorization: '',
-            'Content-Type': 'application/json',
-          },
-        },
-      })
-      .put(`${url}/post/1`, {
+    const { body, status } = await supertest(app)
+      .put('/post/1')
+      .send({
         title: 'Fórmula 1 editado',
         content: 'O campeão do ano! editado',
       })
-      .expect('status', 401)
-      .then((response) => {
-        const { json: jsonResponse } = response
-        expect(jsonResponse.message).toBe('Token not found')
-      })
+      .set('Authorization', token)
+
+    expect(status).toBe(200)
+    expect(body).toEqual(expect.objectContaining({
+      title: 'Fórmula 1 editado',
+      content: 'O campeão do ano! editado',
+      userId: 1,
+      categories: [{ id: 1, name: "Inovação" }]
+    }))
   })
 
-  it('Será validado que não possível editar um blogpost com token inválido', () => {
-    return frisby
-      .setup({
-        request: {
-          headers: {
-            Authorization: 'et462g5r',
-            'Content-Type': 'application/json',
-          },
-        },
+  it('Será validado que não é possível editar as categorias de um blogpost', async () => {
+    const { body: loginResponse, status: loginStatus } = await supertest(app)
+      .post('/login')
+      .send({
+        email: 'lewishamilton@gmail.com',
+        password: '123456',
       })
-      .put(`${url}/post/1`, {
+
+    expect(loginStatus).toBe(200)
+    expect(loginResponse.token).not.toBeNull()
+
+    const token = `Bearer ${loginResponse.token}`
+
+    const { body, status } = await supertest(app)
+      .put('/post/1')
+      .set('Authorization', token)
+      .send({
+        title: 'Fórmula 1 editado',
+        content: 'O campeão do ano! editado',
+        categoryIds: [1, 2]
+      })
+
+    expect(status).toBe(400)
+    expect(body.message).toBe('Categories cannot be edited')
+  })
+
+  it('Será validado que não é possível editar um blogpost com outro usuário', async () => {
+    const { body: loginResponse, status: loginStatus } = await supertest(app)
+      .post('/login')
+      .send({
+        email: 'MichaelSchumacher@gmail.com',
+        password: '123456',
+      })
+
+    expect(loginStatus).toBe(200)
+    expect(loginResponse.token).not.toBeNull()
+
+    const token = `Bearer ${loginResponse.token}`
+
+    const { body, status } = await supertest(app)
+      .put('/post/1')
+      .send({
+        title: 'Fórmula 1 editado',
+        content: 'O campeão do ano! editado'
+      })
+      .set('Authorization', token)
+
+    expect(status).toBe(401)
+    expect(body.message).toBe('Unauthorized user')
+  })
+
+  it('Será validado que não possível editar um blogpost sem token', async () => {
+    const { body, status } = await supertest(app)
+      .put('/post/1')
+      .set('Authorization', '')
+      .send({
         title: 'Fórmula 1 editado',
         content: 'O campeão do ano! editado',
       })
-      .expect('status', 401)
-      .then((response) => {
-        const { json: jsonResponse } = response
-        expect(jsonResponse.message).toBe('Expired or invalid token')
-      })
+
+    expect(status).toBe(401)
+    expect(body.message).toBe('Token not found')
   })
 
-  it('Será validado que não possível editar um blogpost sem o campo `title`', () => {
-    let token
-    return frisby
-      .post(`${url}/login`,
-        {
-          email: 'lewishamilton@gmail.com',
-          password: '123456',
-        })
-      .expect('status', 200)
-      .then((response) => {
-        const { json } = response
-        token = json.token
-        
-        return frisby
-          .setup({
-            request: {
-              headers: {
-                Authorization: token,
-                'Content-Type': 'application/json',
-              },
-            },
-          })
-          .put(`${url}/post/1`, {
-            content: 'O campeão do ano! editado',
-          })
-          .expect('status', 400)
-          .then((response) => {
-            const { json: jsonResponse } = response
-            expect(jsonResponse.message).toBe('"title" is required')
-          })
+  it('Será validado que não possível editar um blogpost com token inválido', async () => {
+    const { body, status } = await supertest(app)
+      .put('/post/1')
+      .set('Authorization', 'Bearer et462g5r')
+      .send({
+        title: 'Fórmula 1 editado',
+        content: 'O campeão do ano! editado',
       })
+
+    expect(status).toBe(401)
+    expect(body.message).toBe('Expired or invalid token')
   })
 
-  it('Será validado que não possível editar um blogpost sem o campo `content`', () => {
-    let token
-    return frisby
-      .post(`${url}/login`,
-        {
-          email: 'lewishamilton@gmail.com',
-          password: '123456',
-        })
-      .expect('status', 200)
-      .then((response) => {
-        const { json } = response
-        token = json.token
-
-        return frisby
-          .setup({
-            request: {
-              headers: {
-                Authorization: token,
-                'Content-Type': 'application/json',
-              },
-            },
-          })
-          .put(`${url}/post/1`, {
-            title: 'Fórmula 1 editado',
-          })
-          .expect('status', 400)
-          .then((response) => {
-            const { json: jsonResponse } = response
-            expect(jsonResponse.message).toBe('"content" is required')
-          })
+  it('Será validado que não possível editar um blogpost sem o campo `title`', async () => {
+    const { body: loginResponse, status: loginStatus } = await supertest(app)
+      .post('/login')
+      .send({
+        email: 'lewishamilton@gmail.com',
+        password: '123456',
       })
+
+    expect(loginStatus).toBe(200)
+    expect(loginResponse.token).not.toBeNull()
+
+    const token = `Bearer ${loginResponse.token}`
+
+    const { body, status } = await supertest(app)
+      .put('/post/1')
+      .send({ content: 'O campeão do ano! editado' })
+      .set('Authorization', token)
+
+    expect(status).toBe(400)
+    expect(body.message).toBe('"title" is required')
+  })
+
+  it('Será validado que não possível editar um blogpost sem o campo `content`', async () => {
+    const { body: loginResponse, status: loginStatus } = await supertest(app)
+      .post('/login')
+      .send({
+        email: 'lewishamilton@gmail.com',
+        password: '123456',
+      })
+
+    expect(loginStatus).toBe(200)
+    expect(loginResponse.token).not.toBeNull()
+
+    const token = `Bearer ${loginResponse.token}`
+
+    const { body, status } = await supertest(app)
+      .put('/post/1')
+      .send({ title: 'Fórmula 1 editado' })
+      .set('Authorization', token)
+
+    expect(status).toBe(400)
+    expect(body.message).toBe('"content" is required')
   })
 })
