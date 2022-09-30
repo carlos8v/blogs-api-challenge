@@ -85,4 +85,25 @@ describe('9 - Sua aplicação deve ter o endpoint GET `post/:id`', () => {
     expect(status).toBe(404)
     expect(body.message).toBe('Post does not exist')
   })
+
+  it('Será validado que não é possível listar um blogpost com formato inválido', async () => {
+    const { body: loginResponse, status: loginStatus } = await supertest(app)
+      .post('/login')
+      .send({
+        email: 'lewishamilton@gmail.com',
+        password: '123456',
+      })
+
+    expect(loginStatus).toBe(200)
+    expect(loginResponse.token).not.toBeNull()
+
+    const token = `Bearer ${loginResponse.token}`
+
+    const { body, status } = await supertest(app)
+      .get('/post/FormatoInvalido')
+      .set('Authorization', token)
+
+    expect(status).toBe(404)
+    expect(body.message).toBe('Post does not exist')
+  })
 })

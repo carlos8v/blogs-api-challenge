@@ -143,7 +143,7 @@ Em cada requisito você encontrará uma imagem de um protótipo de como sua apli
 
 O não cumprimento de um requisito, total ou parcialmente, impactará em sua avaliação.
 
-Há um arquivo `src/index.ts` no repositório. Não remova, nele, o seguinte trecho de código:
+Há um arquivo `src/server.ts` no repositório. Não remova, nele, o seguinte trecho de código:
 
 ```javascript
 app.get('/', (_request, response) => {
@@ -625,6 +625,9 @@ Além disso, as seguintes verificações serão feitas:
 
 - **[Será validado que não é possível listar um blogpost inexistente]**
   * Se o id do post for inválido o resultado retornado deverá ser conforme exibido abaixo, com um status http `404`
+
+- **[Será validado que não é possível listar um blogpost com formato inválido]**
+  * Se o id do post for um formato inválido (Ex: `/post/invalido`) o resultado retornado deverá ser conforme exibido abaixo, com um status http `404`
 
 ### 10 - Sua aplicação deve ter o endpoint PUT `/post/:id`
 
