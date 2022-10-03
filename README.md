@@ -272,10 +272,10 @@ npm test -- tests/req07-createPost.spec.js
 
   ```json
   {
-    "displayName": "Ada Lovelace",
-    "email": "ada@lovelace.com",
+    "displayName": "Brett Wiltshire",
+    "email": "brett@email.com",
     "password": "123456",
-    "image": "https://avatars.dicebear.com/api/adventurer/ada%20lovelace.svg"
+    "image": "http://4.bp.blogspot.com/_YA50adQ-7vQ/S1gfR_6ufpI/AAAAAAAAAAk/1ErJGgRWZDg/S45/brett.png"
   }
   ```
 - O campo `displayName` deverá ser uma string com no mínimo de 8 caracteres;
@@ -304,28 +304,76 @@ npm test -- tests/req07-createPost.spec.js
 ### Além disso, as seguintes verificações serão feitas:
 
 - **[Será validado que é possível cadastrar um usuário com sucesso]**
-  * Se o usuário for criado com sucesso o resultado retornado deverá ser conforme exibido abaixo, com um status http `201`
+
+  Se o usuário for criado com sucesso o resultado retornado deverá ser conforme exibido abaixo, com um status http `201`:
+  ```json
+  {
+    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwYXlsb2FkIjp7ImlkIjo1LCJkaXNwbGF5TmFtZSI6InVzdWFyaW8gZGUgdGVzdGUiLCJlbWFpbCI6InRlc3RlQGVtYWlsLmNvbSIsImltYWdlIjoibnVsbCJ9LCJpYXQiOjE2MjAyNDQxODcsImV4cCI6MTYyMDY3NjE4N30.Roc4byj6mYakYqd9LTCozU1hd9k_Vw5IWKGL4hcCVG8"
+  }
+  ```
 
 - **[Será validado que não é possível cadastrar usuário com o campo `displayName` menor que 8 caracteres]**
-  * Se o usuário tiver o campo "displayName" menor que 8 caracteres o resultado retornado deverá ser conforme exibido abaixo, com um status http `400`
+
+  Se o usuário tiver o campo "displayName" menor que 8 caracteres o resultado retornado deverá ser conforme exibido abaixo, com um status http `400`:
+  ```json
+  {
+    "message": "\"displayName\" length must be at least 8 characters long"
+  }
+  ```
 
 - **[Será validado que não é possível cadastrar usuário com o campo `email` com formato `email: rubinho`]**
-  * Se o usuário tiver o campo "email" com o formato `email: rubinho` o resultado retornado deverá ser conforme exibido abaixo, com um status http `400`
+
+  Se o usuário tiver o campo "email" com o formato `email: rubinho` o resultado retornado deverá ser conforme exibido abaixo, com um status http `400`:
+  ```json
+  {
+    "message": "\"email\" must be a valid email"
+  }
+  ```
 
 - **[Será validado que não é possível cadastrar usuário com o campo `email` com formato `email: @gmail.com`]**
-  * Se o usuário tiver o campo "email" com o formato `email: @gmail.com` o resultado retornado deverá ser conforme exibido abaixo, com um status http `400`
+
+  Se o usuário tiver o campo "email" com o formato `email: @gmail.com` o resultado retornado deverá ser conforme exibido abaixo, com um status http `400`:
+  ```json
+  {
+    "message": "\"email\" must be a valid email"
+  }
+  ```
 
 - **[Será validado que o campo `email` é obrigatório]**
-  * Se o usuário não tiver campo "email" o resultado retornado deverá ser conforme exibido abaixo, com um status http `400`
+
+  Se o usuário não tiver campo "email" o resultado retornado deverá ser conforme exibido abaixo, com um status http `400`:
+  ```json
+  {
+    "message": "\"email\" is required"
+  }
+  ```
 
 - **[Será validado que não é possível cadastrar usuário com o campo `password` menor que 6 caracteres]**
-  * Se o usuário tiver o campo "password" menor que 6 caracteres o resultado retornado deverá ser conforme exibido abaixo, com um status http `400`
+
+  Se o usuário tiver o campo "password" menor que 6 caracteres o resultado retornado deverá ser conforme exibido abaixo, com um status http `400`:
+  ```json
+  {
+    "message": "\"password\" length must be 6 characters long"
+  }
+  ```
 
 - **[Será validado que o campo `password` é obrigatório]**
-  * Se o usuário não tiver campo "password" o resultado retornado deverá ser conforme exibido abaixo, com um status http `400`
+
+  Se o usuário não tiver campo "password" o resultado retornado deverá ser conforme exibido abaixo, com um status http `400`:
+  ```json
+  {
+    "message": "\"password\" is required"
+  }
+  ```
 
 - **[Validar que não é possível cadastrar um usuário com email já existente]**
-  * Se o usuário cadastrar o campo "email" com um email que já existe, o resultado retornado deverá ser conforme exibido abaixo, com um status http `409`
+
+  Se o usuário cadastrar o campo "email" com um email que já existe, o resultado retornado deverá ser conforme exibido abaixo, com um status http `409`:
+  ```json
+  {
+    "message": "User already registered"
+  }
+  ```
 
 ### 2 - Sua aplicação deve ter o endpoint POST `/login`
 
@@ -354,22 +402,58 @@ npm test -- tests/req07-createPost.spec.js
 ### Além disso, as seguintes verificações serão feitas:
 
 - **[Será validado que é possível fazer login com sucesso]**
-  * Se o login foi feito com sucesso o resultado retornado deverá ser conforme exibido abaixo, com um status http `200`
+
+  Se o login foi feito com sucesso o resultado retornado deverá ser conforme exibido abaixo, com um status http `200`:
+  ```json
+  {
+    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwYXlsb2FkIjp7ImlkIjo1LCJkaXNwbGF5TmFtZSI6InVzdWFyaW8gZGUgdGVzdGUiLCJlbWFpbCI6InRlc3RlQGVtYWlsLmNvbSIsImltYWdlIjoibnVsbCJ9LCJpYXQiOjE2MjAyNDQxODcsImV4cCI6MTYyMDY3NjE4N30.Roc4byj6mYakYqd9LTCozU1hd9k_Vw5IWKGL4hcCVG8"
+  }
+  ```
 
 - **[Será validado que não é possível fazer login sem o campo `email`]**
-  * Se o login não tiver o campo "email" o resultado retornado deverá ser conforme exibido abaixo, com um status http `400`
+
+  Se o login não tiver o campo "email" o resultado retornado deverá ser conforme exibido abaixo, com um status http `400`:
+  ```json
+  {
+    "message": "\"email\" is required"
+  }
+  ```
 
 - **[Será validado que não é possível fazer login sem o campo `password`]**
-  * Se o login não tiver o campo "password" o resultado retornado deverá ser conforme exibido abaixo, com um status http `400`
+
+  Se o login não tiver o campo "password" o resultado retornado deverá ser conforme exibido abaixo, com um status http `400`:
+  ```json
+  {
+    "message": "\"password\" is required"
+  }
+  ```
 
 - **[Será validado que não é possível fazer login com o campo `email` em branco]**
-  * Se o login tiver o campo "email" em branco o resultado retornado deverá ser conforme exibido abaixo, com um status http `400`
+
+  Se o login tiver o campo "email" em branco o resultado retornado deverá ser conforme exibido abaixo, com um status http `400`:
+  ```json
+  {
+    "message": "\"email\" is not allowed to be empty"
+  }
+  ```
 
 - **[Será validado que não é possível fazer login com o campo `password` em branco]**
-  * Se o login tiver o campo "password" em branco o resultado retornado deverá ser conforme exibido abaixo, com um status http `400`
+
+  Se o login tiver o campo "password" em branco o resultado retornado deverá ser conforme exibido abaixo, com um status http `400`:
+  ```json
+  {
+    "message": "\"password\" is not allowed to be empty"
+  }
+  ```
 
 - **[Será validado que não é possível fazer login com um usuário que não existe]**
-  * Se o login for com usuário inexistente o resultado retornado deverá ser conforme exibido abaixo, com um status http `400`
+
+  Se o login for com usuário inexistente o resultado retornado deverá ser conforme exibido abaixo, com um status http `400`:
+  ```json
+  {
+    "message": "Invalid fields"
+  }
+  ```
 
 ### 3 - Sua aplicação deve ter o endpoint GET `/user`
 
@@ -380,10 +464,10 @@ npm test -- tests/req07-createPost.spec.js
   ```json
   [
     {
-      "id": 1,
-      "displayName": "Ada Lovelace",
-      "email": "ada@lovelace.com",
-      "image": "https://avatars.dicebear.com/api/adventurer/ada%20lovelace.svg"
+      "id": 3,
+      "displayName": "Brett Wiltshire",
+      "email": "brett@email.com",
+      "image": "http://4.bp.blogspot.com/_YA50adQ-7vQ/S1gfR_6ufpI/AAAAAAAAAAk/1ErJGgRWZDg/S45/brett.png"
     }
   ]
   ```
@@ -393,13 +477,42 @@ npm test -- tests/req07-createPost.spec.js
 ### Além disso, as seguintes verificações serão feitas:
 
 - **[Será validado que é possível listar todos os usuários]**
-  * Ao listar usuários com sucesso o resultado retornado deverá ser conforme exibido abaixo, com um status http `200`
+
+  Ao listar usuários com sucesso o resultado retornado deverá ser conforme exibido abaixo, com um status http `200`:
+  ```json
+  [
+    {
+      "id": 1,
+      "displayName": "Lewis Hamilton",
+      "email": "lewishamilton@gmail.com",
+      "image": "https://upload.wikimedia.org/wikipedia/commons/1/18/Lewis_Hamilton_2016_Malaysia_2.jpg"
+    },
+    {
+      "id": 2,
+      "displayName": "Michael Schumacher",
+      "email": "MichaelSchumacher@gmail.com",
+      "image": "https://sportbuzz.uol.com.br/media/_versions/gettyimages-52491565_widelg.jpg"
+    }
+  ]
+  ```
 
 - **[Será validado que não é possível listar usuários sem o token na requisição]**
-  * Se o token for inexistente o resultado retornado deverá ser conforme exibido abaixo, com um status http `401`
+
+  Se o token for inexistente o resultado retornado deverá ser conforme exibido abaixo, com um status http `401`:
+  ```json
+  {
+    "message": "Token not found"
+  }
+  ```
 
 - **[Será validado que não é possível listar usuários com o token inválido]**
-  * Se o token for inválido o resultado retornado deverá ser conforme exibido abaixo, com um status http `401`
+
+  Se o token for inválido o resultado retornado deverá ser conforme exibido abaixo, com um status http `401`:
+  ```json
+  {
+    "message": "Expired or invalid token"
+  }
+  ```
 
 ### 4 - Sua aplicação deve ter o endpoint GET `/user/:id`
 
@@ -410,10 +523,9 @@ npm test -- tests/req07-createPost.spec.js
   ```json
   {
     "id": 1,
-    "displayName": "Ada Lovelace",
-    "email": "ada@lovelace.com",
-    "password": "123456",
-    "image": "https://avatars.dicebear.com/api/adventurer/ada%20lovelace.svg"
+    "displayName": "Lewis Hamilton",
+    "email": "lewishamilton@gmail.com",
+    "image": "https://upload.wikimedia.org/wikipedia/commons/1/18/Lewis_Hamilton_2016_Malaysia_2.jpg"
   }
   ```
 
@@ -422,17 +534,43 @@ npm test -- tests/req07-createPost.spec.js
 ### Além disso, as seguintes verificações serão feitas:
 
 - **[Será validado que é possível listar um usuario específico com sucesso]**
-  * Ao listar um usuário com sucesso o resultado retornado deverá ser conforme exibido abaixo, com um status http `200`
+
+  Ao listar um usuário com sucesso o resultado retornado deverá ser conforme exibido abaixo, com um status http `200`:
+  ```json
+  {
+    "id": 1,
+    "displayName": "Lewis Hamilton",
+    "email": "lewishamilton@gmail.com",
+    "image": "https://upload.wikimedia.org/wikipedia/commons/1/18/Lewis_Hamilton_2016_Malaysia_2.jpg"
+  }
+  ```
 
 - **[Será validado que não é possível listar um usuário inexistente]**
 
-  * Se o usuário for inexistente o resultado retornado deverá ser conforme exibido abaixo, com um status http `404`
+  Se o usuário for inexistente o resultado retornado deverá ser conforme exibido abaixo, com um status http `404`:
+  ```json
+  {
+    "message": "User does not exist"
+  }
+  ```
 
 - **[Será validado que não é possível listar um determinado usuário sem o token na requisição]**
-  * Se o token for inexistente o resultado retornado deverá ser conforme exibido abaixo, com um status http `401`
+
+  Se o token for inexistente o resultado retornado deverá ser conforme exibido abaixo, com um status http `401`:
+  ```json
+  {
+    "message": "Token not found"
+  }
+  ```
 
 - **[Será validado que não é possível listar um determinado usuário com o token inválido]**
-  * Se o token for inválido o resultado retornado deverá ser conforme exibido abaixo, com um status http `401`
+
+  Se o token for inválido o resultado retornado deverá ser conforme exibido abaixo, com um status http `401`:
+  ```json
+  {
+    "message": "Expired or invalid token"
+  }
+  ```
 
 ### 5 - Sua aplicação deve ter o endpoint POST `/categories`
 
@@ -453,16 +591,41 @@ npm test -- tests/req07-createPost.spec.js
 ### Além disso, as seguintes verificações serão feitas:
 
 - **[Será validado que é possível cadastrar uma categoria com sucesso]**
-  * Se cadastrar uma categoria com sucesso o resultado retornado deverá ser conforme exibido abaixo, com um status http `201`
+
+  e cadastrar uma categoria com sucesso o resultado retornado deverá ser conforme exibido abaixo, com um status http `201`:
+  ```json
+  {
+    "id": 3,
+    "name": "Typescript"
+  }
+  ```
 
 - **[Será validado que não é possível cadastrar uma categoria sem o campo name]**
-  * Se ao tentar cadastrar uma categoria sem o campo name o resultado retornado deverá ser conformo exibido abaixo, com um status http `400`
+
+  Se ao tentar cadastrar uma categoria sem o campo name o resultado retornado deverá ser conformo exibido abaixo, com um status http `400`:
+  ```json
+  {
+    "message": "\"name\" is required"
+  }
+  ```
 
 - **[Será validado que não é possível cadastrar uma determinada categoria com o token inválido]**
-  * Se o token for inválido o resultado retornado deverá ser conforme exibido abaixo, com um status http `401`
+
+  Se o token for inválido o resultado retornado deverá ser conforme exibido abaixo, com um status http `401`:
+  ```json
+  {
+    "message": "Expired or invalid token"
+  }
+  ```
 
 - **[Será validado que não é possível cadastrar uma determinada categoria sem o token na requisição]**
-  * Se o token for inexistente o resultado retornado deverá ser conforme exibido abaixo, com um status http `401`
+
+  Se o token for inexistente o resultado retornado deverá ser conforme exibido abaixo, com um status http `401`:
+  ```json
+  {
+    "message": "Token not found"
+  }
+  ```
 
 ### 6 - Sua aplicação deve ter o endpoint GET `/categories`
 
@@ -485,15 +648,38 @@ npm test -- tests/req07-createPost.spec.js
 
 Além disso, as seguintes verificações serão feitas:
 - **[Será validado que é possível listar todas as categoria com sucesso]**
-  * Se buscar todas as categorias com sucesso o resultado retornado deverá ser conforme exibido abaixo, com um status http `200`
 
+  Ao buscar todas as categorias com sucesso o resultado retornado deverá ser conforme exibido abaixo, com um status http `200`:
+  ```json
+  [
+    {
+      "id": 1,
+      "name": "Escola"
+    },
+    {
+      "id": 2,
+      "name": "Inovação"
+    }
+  ]
+  ```
 
 - **[Será validado que não é possível listar as categorias com o token inválido]**
-  * Se o token for inválido o resultado retornado deverá ser conforme exibido abaixo, com um status http `401`
+
+  Se o token for inválido o resultado retornado deverá ser conforme exibido abaixo, com um status http `401`:
+  ```json
+  {
+    "message": "Expired or invalid token"
+  }
+  ```
 
 - **[Será validado que não é possível cadastrar uma determinada categoria sem o token na requisição]**
-  * Se o token for inexistente o resultado retornado deverá ser conforme exibido abaixo, com um status http `401`
 
+  Se o token for inexistente o resultado retornado deverá ser conforme exibido abaixo, com um status http `401`:
+  ```json
+  {
+    "message": "Token not found"
+  }
+  ```
 
 ### 7 - Sua aplicação deve ter o endpoint POST `/post`
 
@@ -516,25 +702,70 @@ Além disso, as seguintes verificações serão feitas:
 ### Além disso, as seguintes verificações serão feitas:
 
 - **[Será validado que é possível cadastrar um blogpost com sucesso]**
-  * Se cadastrar um blogpost com sucesso o resultado retornado deverá ser conforme exibido abaixo, com um status http `201`
+
+  Se cadastrar um blogpost com sucesso o resultado retornado deverá ser conforme exibido abaixo, com um status http `201`:
+  ```json
+  {
+    "id": 4,
+    "userId": 1,
+    "title": "Fórmula 1",
+    "content": "O campeão do ano!"
+  }
+  ```
 
 - **[Será validado que não é possível cadastrar um blogpost sem o campo `title`]**
-  * Se não conter o campo `title` o resultado retornado deverá ser conforme exibido abaixo, com um status http `400`
+
+  Se não conter o campo `title` o resultado retornado deverá ser conforme exibido abaixo, com um status http `400`:
+  ```json
+  {
+    "message": "\"title\" is required"
+  }
+  ```
 
 - **[Será validado que não é possível cadastrar um blogpost sem o campo `content`]**
-  * Se não conter o campo `content` o resultado retornado deverá ser conforme exibido abaixo, com um status http `400`
+
+  Se não conter o campo `content` o resultado retornado deverá ser conforme exibido abaixo, com um status http `400`:
+  ```json
+  {
+    "message": "\"content\" is required"
+  }
+  ```
 
 - **[Será validado que não é possível cadastrar um blogpost sem o campo `categoryIds`]**
-  * Se não conter o campo `categoryIds` o resultado retornado deverá ser conforme exibido abaixo, com um status http `400`
+
+  Se não conter o campo `categoryIds` o resultado retornado deverá ser conforme exibido abaixo, com um status http `400`:
+  ```json
+  {
+    "message": "\"categoryId\" is required"
+  }
+  ```
 
 - **[Será validado que não é possível cadastrar um blogpost com uma `categoryIds` inexistente]**
-  * Se o campo `categoryIds` tiver uma categoria inexistente, o resultado retornado deverá ser conforme exibido abaixo, com um status http `400`
+
+  Se o campo `categoryIds` tiver uma categoria inexistente, o resultado retornado deverá ser conforme exibido abaixo, com um status http `400`:
+  ```json
+  {
+    "message": "\"categoryIds\" not found"
+  }
+  ```
 
 - **[Será validado que não é possível cadastrar um blogpost sem o token]**
-  * Se não conter o token o resultado retornado deverá ser conforme exibido abaixo, com um status http `401`
+
+  Se não conter o token o resultado retornado deverá ser conforme exibido abaixo, com um status http `401`:
+  ```json
+  {
+    "message": "Token not found"
+  }
+  ```
 
 - **[Será validado que não é possível cadastrar um blogpost com o token inválido]**
-  * Se o token for inválido o resultado retornado deverá ser conforme exibido abaixo, com um status http `401`
+
+  Se o token for inválido o resultado retornado deverá ser conforme exibido abaixo, com um status http `401`:
+  ```json
+  {
+    "message": "Expired or invalid token"
+  }
+  ```
 
 ### 8 - Sua aplicação deve ter o endpoint GET `/post`
 
@@ -553,9 +784,9 @@ Além disso, as seguintes verificações serão feitas:
     "updated": "2011-08-01T19:58:51.000Z",
     "user": {
       "id": 1,
-      "displayName": "Ada Lovelace",
-      "email": "ada@lovelace.com",
-      "image": "https://avatars.dicebear.com/api/adventurer/ada%20lovelace.svg"
+      "displayName": "Lewis Hamilton",
+      "email": "lewishamilton@gmail.com",
+      "image": "https://upload.wikimedia.org/wikipedia/commons/1/18/Lewis_Hamilton_2016_Malaysia_2.jpg"
     },
     "categories": [
       {
@@ -570,13 +801,50 @@ Além disso, as seguintes verificações serão feitas:
 ### Além disso, as seguintes verificações serão feitas:
 
 - **[Será validado que é possível listar blogpost com sucesso]**
-  * Se listar os blogpost com sucesso o resultado retornado deverá ser conforme exibido abaixo, com um status http `200`
+
+  Se listar os blogpost com sucesso o resultado retornado deverá ser conforme exibido abaixo, com um status http `200`:
+  ```json
+  [
+    {
+      "id": 1,
+      "title": "Post do Ano",
+      "content": "Melhor post do ano",
+      "userId": 1,
+      "published": "2011-08-01T19:58:00.000Z",
+      "updated": "2011-08-01T19:58:51.000Z",
+      "user": {
+        "id": 1,
+        "displayName": "Lewis Hamilton",
+        "email": "lewishamilton@gmail.com",
+        "image": "https://upload.wikimedia.org/wikipedia/commons/1/18/Lewis_Hamilton_2016_Malaysia_2.jpg"
+      },
+      "categories": [
+        {
+          "id": 1,
+          "name": "Inovação"
+        }
+      ]
+    }
+  ]
+  ```
 
 - **[Será validado que não é possível listar blogpost sem token]**
-  * Se não conter o token o resultado retornado deverá ser conforme exibido abaixo, com um status http `401`
+
+  Se não conter o token o resultado retornado deverá ser conforme exibido abaixo, com um status http `401`:
+  ```json
+  {
+    "message": "Token not found"
+  }
+  ```
 
 - **[Será validado que não é possível listar blogpost com token inválido]**
-  * Se o token for inválido o resultado retornado deverá ser conforme exibido abaixo, com um status http `401`
+
+  Se o token for inválido o resultado retornado deverá ser conforme exibido abaixo, com um status http `401`:
+  ```json
+  {
+    "message": "Expired or invalid token"
+  }
+  ```
 
 ### 9 - Sua aplicação deve ter o endpoint GET `post/:id`
 
@@ -585,7 +853,7 @@ Além disso, as seguintes verificações serão feitas:
 - Retorna um **BlogPost** com o `id` especificado. O retorno deve ter os seguinte formato:
 
 ```json
-  {
+{
   "id": 1,
   "title": "Post do Ano",
   "content": "Melhor post do ano",
@@ -594,10 +862,10 @@ Além disso, as seguintes verificações serão feitas:
   "updated": "2011-08-01T19:58:51.000Z",
   "user": {
     "id": 1,
-    "displayName": "Ada Lovelace",
-    "email": "ada@lovelace.com",
+    "displayName": "Lewis Hamilton",
+    "email": "lewishamilton@gmail.com",
     "password": "123456",
-    "image": "https://avatars.dicebear.com/api/adventurer/ada%20lovelace.svg"
+    "image": "https://upload.wikimedia.org/wikipedia/commons/1/18/Lewis_Hamilton_2016_Malaysia_2.jpg"
   },
   "categories": [
     {
@@ -611,19 +879,67 @@ Além disso, as seguintes verificações serão feitas:
 ### Além disso, as seguintes verificações serão feitas:
 
 - **[Será validado que é possível listar um blogpost com sucesso]**
-  * Se listar um blogpost com sucesso o resultado retornado deverá ser conforme exibido abaixo, com um status http `200`
+
+  Se listar um blogpost com sucesso o resultado retornado deverá ser conforme exibido abaixo, com um status http `200`:
+  ```json
+  {
+    "id": 1,
+    "title": "Post do Ano",
+    "content": "Melhor post do ano",
+    "userId": 1,
+    "published": "2011-08-01T19:58:00.000Z",
+    "updated": "2011-08-01T19:58:51.000Z",
+    "user": {
+      "id": 1,
+      "displayName": "Lewis Hamilton",
+      "email": "lewishamilton@gmail.com",
+      "password": "123456",
+      "image": "https://upload.wikimedia.org/wikipedia/commons/1/18/Lewis_Hamilton_2016_Malaysia_2.jpg"
+    },
+    "categories": [
+      {
+        "id": 1,
+        "name": "Inovação"
+      }
+    ]
+  }
+  ```
 
 - **[Será validado que não é possível listar um blogpost sem token]**
-  * Se não conter o token o resultado retornado deverá ser conforme exibido abaixo, com um status http `401`
+
+  Se não conter o token o resultado retornado deverá ser conforme exibido abaixo, com um status http `401`:
+  ```json
+  {
+    "message": "Token not found"
+  }
+  ```
 
 - **[Será validado que não é possível listar um blogpost com token inválido]**
-  * Se o token for inválido o resultado retornado deverá ser conforme exibido abaixo, com um status http `401`
+
+  Se o token for inválido o resultado retornado deverá ser conforme exibido abaixo, com um status http `401`:
+  ```json
+  {
+    "message": "Expired or invalid token"
+  }
+  ```
 
 - **[Será validado que não é possível listar um blogpost inexistente]**
-  * Se o id do post for inválido o resultado retornado deverá ser conforme exibido abaixo, com um status http `404`
+
+  Se o id do post for inválido o resultado retornado deverá ser conforme exibido abaixo, com um status http `404`:
+  ```json
+  {
+    "message": "Post does not exist"
+  }
+  ```
 
 - **[Será validado que não é possível listar um blogpost com formato inválido]**
-  * Se o id do post for um formato inválido (Ex: `/post/invalido`) o resultado retornado deverá ser conforme exibido abaixo, com um status http `404`
+
+  Se o id do post for um formato inválido (Ex: `/post/invalido`) o resultado retornado deverá ser conforme exibido abaixo, com um status http `404`:
+  ```json
+  {
+    "message": "Post does not exist"
+  }
+  ```
 
 ### 10 - Sua aplicação deve ter o endpoint PUT `/post/:id`
 
@@ -651,25 +967,75 @@ Além disso, as seguintes verificações serão feitas:
 ### Além disso, as seguintes verificações serão feitas:
 
 - **[Será validado que é possível editar um blogpost com sucesso]**
-  * Se editar um blogpost com sucesso o resultado retornado deverá ser conforme exibido abaixo, com um status http `200`
+
+  Se editar um blogpost com sucesso o resultado retornado deverá ser conforme exibido abaixo, com um status http `200`:
+  ```json
+  {
+    "title": "",
+    "content": "",
+    "userId": 1,
+    "categories": [
+      {
+        "id": 1,
+        "name": "Inovação"
+      }
+    ]
+  }
+  ```
 
 - **[Será validado que não é possível editar as categorias de um blogpost]**
-  * Só será possível editar o título ou o conteúdo de um post.
+
+  Só será possível editar o título ou o conteúdo de um post:
+  ```json
+  {
+    "message": "Categories cannot be edited"
+  }
+  ```
 
 - **[Será validado que não é possível editar um blogpost com outro usuário]**
-  * Somente o usuário que criou o post poderá edita-lo.
+
+  Somente o usuário que criou o post poderá edita-lo:
+  ```json
+  {
+    "message": "Unauthorized user"
+  }
+  ```
 
 - **[Será validado que não possível editar um blogpost sem token]**
-  * Se não conter o token o resultado retornado deverá ser conforme exibido abaixo, com um status http `401`
+
+  Se não conter o token o resultado retornado deverá ser conforme exibido abaixo, com um status http `401`:
+  ```json
+  {
+    "message": "Token not found"
+  }
+  ```
 
 - **[Será validado que não possível editar um blogpost com token inválido]**
-  * Se o token for inválido o resultado retornado deverá ser conforme exibido abaixo, com um status http `401`
+
+  Se o token for inválido o resultado retornado deverá ser conforme exibido abaixo, com um status http `401`:
+  ```json
+  {
+    "message": "Expired or invalid token"
+  }
+  ```
 
 - **[Será validado que não possível editar um blogpost sem o campo `title`]**
-  * Se não conter o campo `title` o resultado retornado deverá ser conforme exibido abaixo, com um status http `400`
+
+  Se não conter o campo `title` o resultado retornado deverá ser conforme exibido abaixo, com um status http `400`:
+  ```json
+  {
+    "message": "\"title\" is required"
+  }
+  ```
 
 - **[Será validado que não possível editar um blogpost sem o campo `content`]**
-  * Se não conter o campo `content` o resultado retornado deverá ser conforme exibido abaixo, com um status http `400`
+
+  Se não conter o campo `content` o resultado retornado deverá ser conforme exibido abaixo, com um status http `400`:
+  ```json
+  {
+    "message": "\"content\" is required"
+  }
+  ```
 
 ## Requisitos Bônus
 
@@ -688,19 +1054,44 @@ Além disso, as seguintes verificações serão feitas:
 ### Além disso, as seguintes verificações serão feitas:
 
 - **[Será validado que é possível deletar um blogpost com sucesso]**
-  * Se deletar blogpost com sucesso o resultado retornado deverá ser conforme exibido abaixo, com um status http `204`
+
+  Se deletar blogpost com sucesso o resultado retornado deverá ser um status http `204`
 
 - **[Será validado que não é possível deletar um blogpost com outro usuário]**
-  * Se não for o dono do blogpost o resultado retornado deverá ser conforme exibido abaixo, com um status http `401`
+
+  Se não for o dono do blogpost o resultado retornado deverá ser conforme exibido abaixo, com um status http `401`:
+  ```json
+  {
+    "message": "Unauthorized user"
+  }
+  ```
 
 - **[Será validado que não é possível deletar um blogpost inexistente]**
-  * Se o blogpost nao existir o resultado retornado deverá ser conforme exibido abaixo, com um status http `404`
+
+  Se o blogpost nao existir o resultado retornado deverá ser conforme exibido abaixo, com um status http `404`:
+  ```json
+  {
+    "message": "Post does not exist"
+  }
+  ```
 
 - **[Será validado que não é possível deletar um blogpost sem o token]**
-  * Se não contém o token o resultado retornado deverá ser conforme exibido abaixo, com um status http `401`
+
+  Se não contém o token o resultado retornado deverá ser conforme exibido abaixo, com um status http `401`:
+  ```json
+  {
+    "message": "Token not found"
+  }
+  ```
 
 - **[Será validado que não é possível deletar um blogpost com o token inválido]**
-  * Se o token for inválido o resultado retornado deverá ser conforme exibido abaixo, com um status http `401`
+
+  Se o token for inválido o resultado retornado deverá ser conforme exibido abaixo, com um status http `401`:
+  ```json
+  {
+    "message": "Expired or invalid token"
+  }
+  ```
 
 ### 12 - Sua aplicação deve ter o endpoint DELETE `/user/me`
 
@@ -711,13 +1102,26 @@ Além disso, as seguintes verificações serão feitas:
 ### Além disso, as seguintes verificações serão feitas:
 
 - **[Será validado que é possível excluir meu usuário com sucesso]**
-  * Ao deletar um usuário com sucesso o resultado retornado deverá ser conforme exibido abaixo, com um status http `204`
+
+  Ao deletar um usuário com sucesso o resultado retornado deverá ser um status http `204`
 
 - **[Será validado que não é possivel excluir meu usuário com token inválido]**
-  * Se o token for inválido o resultado retornado deverá ser conforme exibido abaixo, com um status http `401`
+
+  Se o token for inválido o resultado retornado deverá ser conforme exibido abaixo, com um status http `401`:
+  ```json
+  {
+    "message": "Expired or invalid token"
+  }
+  ```
 
 - **[Será validado que não é possivel excluir meu usuário sem o token]**
-  * Se não conter o token o resultado retornado deverá ser conforme exibido abaixo, com um status http `401`
+
+  Se não conter o token o resultado retornado deverá ser conforme exibido abaixo, com um status http `401`:
+  ```json
+  {
+    "message": "Token not found"
+  }
+  ```
 
 ### 13 - Sua aplicação deve ter o endpoint GET `post/search?q=:searchTerm`
 
@@ -736,10 +1140,9 @@ Além disso, as seguintes verificações serão feitas:
     "updated": "2011-08-01T19:58:51.000Z",
     "user": {
       "id": 1,
-      "displayName": "Ada Lovelace",
-      "email": "ada@lovelace.com",
-      "password": "123456",
-      "image": "https://avatars.dicebear.com/api/adventurer/ada%20lovelace.svg"
+      "displayName": "Lewis Hamilton",
+      "email": "lewishamilton@gmail.com",
+      "image": "https://upload.wikimedia.org/wikipedia/commons/1/18/Lewis_Hamilton_2016_Malaysia_2.jpg"
     },
     "categories": [
       {
@@ -749,29 +1152,140 @@ Além disso, as seguintes verificações serão feitas:
     ]
   }
 ]
-  ```
+```
 
 - Caso nenhum **BlogPost** satisfaça a busca, retorne um array vazio.
 
 ### Além disso, as seguintes verificações serão feitas:
 
 - **[Será validado que é possível buscar um blogpost pelo `title`]**
-  * Se a buscar for pelo `title` o resultado retornado deverá ser conforme exibido abaixo, com um status http `200`
+
+  se a busca for pelo `title` o resultado retornado deverá ser conforme exibido abaixo, com um status http `200`:
+  ```json
+  [
+    {
+      "id": 2,
+      "title": "Vamos que vamos",
+      "content": "Foguete não tem ré",
+      "userId": 1,
+      "published": "2011-08-01T19:58:00.000Z",
+      "updated": "2011-08-01T19:58:51.000Z",
+      "user": {
+        "id": 1,
+        "displayName": "Lewis Hamilton",
+        "email": "lewishamilton@gmail.com",
+        "image": "https://upload.wikimedia.org/wikipedia/commons/1/18/Lewis_Hamilton_2016_Malaysia_2.jpg"
+      },
+      "categories": [
+        {
+          "id": 2,
+          "name": "Escola"
+        }
+      ]
+    }
+  ]
+  ```
 
 - **[Será validado que é possível buscar um blogpost pelo `content`]**
-  * Se a buscar for pelo `content` o resultado retornado deverá ser conforme exibido abaixo, com um status http `200`
+
+  se a busca for pelo `content` o resultado retornado deverá ser conforme exibido abaixo, com um status http `200`:
+  ```json
+  [
+    {
+      "id": 2,
+      "title": "Vamos que vamos",
+      "content": "Foguete não tem ré",
+      "userId": 1,
+      "published": "2011-08-01T19:58:00.000Z",
+      "updated": "2011-08-01T19:58:51.000Z",
+      "user": {
+        "id": 1,
+        "displayName": "Lewis Hamilton",
+        "email": "lewishamilton@gmail.com",
+        "image": "https://upload.wikimedia.org/wikipedia/commons/1/18/Lewis_Hamilton_2016_Malaysia_2.jpg"
+      },
+      "categories": [
+        {
+          "id": 2,
+          "name": "Escola"
+        }
+      ]
+    }
+  ]
+  ```
 
 - **[Será validado que é possível buscar todos os blogpost quando passa a busca vazia']**
-  * Se a buscar for vazia o resultado retornado deverá ser conforme exibido abaixo, com um status http `200`
+
+  Se a busca for vazia o resultado retornado deverá ser conforme exibido abaixo, com um status http `200`:
+  ```json
+  [
+    {
+      "id": 1,
+      "title": "Post do Ano",
+      "content": "Melhor post do ano",
+      "userId": 1,
+      "published": "2011-08-01T19:58:00.000Z",
+      "updated": "2011-08-01T19:58:51.000Z",
+      "user": {
+        "id": 1,
+        "displayName": "Lewis Hamilton",
+        "email": "lewishamilton@gmail.com",
+        "image": "https://upload.wikimedia.org/wikipedia/commons/1/18/Lewis_Hamilton_2016_Malaysia_2.jpg"
+      },
+      "categories": [
+        {
+          "id": 1,
+          "name": "Inovação"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "title": "Vamos que vamos",
+      "content": "Foguete não tem ré",
+      "userId": 1,
+      "published": "2011-08-01T19:58:00.000Z",
+      "updated": "2011-08-01T19:58:51.000Z",
+      "user": {
+        "id": 1,
+        "displayName": "Lewis Hamilton",
+        "email": "lewishamilton@gmail.com",
+        "image": "https://upload.wikimedia.org/wikipedia/commons/1/18/Lewis_Hamilton_2016_Malaysia_2.jpg"
+      },
+      "categories": [
+        {
+          "id": 2,
+          "name": "Escola"
+        }
+      ]
+    }
+  ]
+  ```
 
 - **[Será validado que é possível buscar um blogpost inexistente e retornar array vazio]**
-  * Se a buscar um post inexistente o resultado retornado deverá ser conforme exibido abaixo, com um status http `200`
+
+  Se a busca um post inexistente o resultado retornado deverá ser conforme exibido abaixo, com um status http `200`:
+  ```json
+  []
+  ```
 
 - **[Será validado que não é possível buscar um blogpost sem o token]**
-  * Se não contém o token o resultado retornado deverá ser conforme exibido abaixo, com um status http `401`
+
+  Se não contém o token o resultado retornado deverá ser conforme exibido abaixo, com um status http `401`:
+  ```json
+  {
+    "message": "Token not found"
+  }
+  ```
 
 - **[Será validado que não é possível buscar um blogpost com o token inválido]**
-  * Se o token for inválido o resultado retornado deverá ser conforme exibido abaixo, com um status http `401`
+
+  Se o token for inválido o resultado retornado deverá ser conforme exibido abaixo, com um status http `401`:
+  ```json
+  {
+    "message": "Expired or invalid"
+  }
+  ```
 
 --- 
 
