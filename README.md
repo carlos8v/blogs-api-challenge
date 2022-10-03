@@ -175,6 +175,7 @@ DATABASE_URL="mysql://adalovelace:password@localhost:3306/blogs_api_challenge"
 ### Dicas
 
 #### Status HTTP
+[![Run in Insomnia}](https://insomnia.rest/images/run.svg)](https://insomnia.rest/run/?label=Blogs%20Api%20Challenge&uri=https%3A%2F%2Fraw.githubusercontent.com%2Fcarlos8v%2Fblogs-api-challenge%2Fmain%2Finsomnia-collection.json)
 
 Tenha em mente que todas as "respostas" devem respeitar os [status do protocolo HTTP](https://developer.mozilla.org/pt-BR/docs/Web/HTTP/Status) com base no que o REST prega.
 
