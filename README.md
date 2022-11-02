@@ -139,7 +139,7 @@ Para fazer um post é necessário usuário e login, portanto será trabalhada a 
 
 ### 👀 Observações importantes:
 
-Em cada requisito você encontrará uma imagem de um protótipo de como sua aplicação deve ficar. Estilo da página não será avaliado.
+Em cada requisito você encontrará um detalhes o que sua aplicação deverá realizar.
 
 O não cumprimento de um requisito, total ou parcialmente, impactará em sua avaliação.
 
@@ -257,7 +257,7 @@ Nesse repositório estaremos usando o [vitest](https://vitest.dev/) para executa
 npm test -- tests/req07-createPost.spec.js
 ```
 
-:warning: Vocẽ pode utilizar `npm test` para rodas todos os testes, mas essa ação pode demorar demais durante o desenvolvimento, deixe que o avaliador determine como está o progresso de seu projeto
+:warning: Você pode utilizar `npm test` para rodas todos os testes, mas essa ação pode demorar demais durante o desenvolvimento, deixe que o avaliador determine como está o progresso de seu projeto
 
 ---
 
