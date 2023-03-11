@@ -6,6 +6,8 @@ jobs:
   evaluator_job:
     name: Evaluator Job
     runs-on: ubuntu-18.04
+    permissions:
+      pull-requests: write
     services:
       mysql:
         image: bitnami/mysql:8.0.21
@@ -33,7 +35,6 @@ jobs:
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
         env:
-          DATABASE_URL: 'mysql://root:password@mysql:3306/blogs_api_challenge'
           JWT_SECRET: secretJWT
           DATABASE_USER: root
           DATABASE_PASS: password
